@@ -1,0 +1,15 @@
+.textArea {
+  display: block;
+  width: 25%;
+  overflow: hidden;
+  min-height: 40px;
+  line-height: 20px;
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  resize: unset;
+}
+
+button {
+    display: block;
+    width: calc(25% + 14px);
+}
