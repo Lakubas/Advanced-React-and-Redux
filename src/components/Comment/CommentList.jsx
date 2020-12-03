@@ -16,7 +16,7 @@ class CommentList extends React.Component {
             <div>
                 <h3>Comment list:</h3>
                 <ul>
-                    {this.props.comments.length == 0 ? <p>No comments in the list</p> : this.renderComments()}
+                    {this.props.comments.length === 0 ? <p>No comments in the list</p> : this.renderComments()}
                 </ul>
             </div>)
     }
