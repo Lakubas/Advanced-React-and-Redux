@@ -1,5 +1,5 @@
 import commentsReducer from 'reducers/comments';
-import { SAVE_COMMENT } from 'actions/types';
+import { SAVE_COMMENT, FETCH_COMMENTS } from 'actions/types';
 
 it('Handles actions of type SAVE_COMMENT', () => {
     const action = {
@@ -22,3 +22,14 @@ it('Handles action with unknown type', () => {
     newState = commentsReducer(['basia'], {});
     expect(newState).toEqual(['basia'])
 })
+
+it('Handles actions of type FETCH_COMMENTS', () => {
+    const action = {
+        type: FETCH_COMMENTS,
+        payload: { data: [ {body: 'New Comment'}, {body: 'Next new'}] }
+    };
+
+    const newState = commentsReducer([], action);
+
+    expect(newState).toEqual(['New Comment', 'Next new']);
+});

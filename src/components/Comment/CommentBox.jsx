@@ -7,9 +7,11 @@ import * as actions from 'actions';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
+import FontDownloadIcon from '@material-ui/icons/FontDownload';
 
 //CSS Files
 import 'components/Comment/css/CommentBox.css';
+import axios from 'axios';
 
 class CommentBox extends React.Component {
     state = { comment: '' };
@@ -28,6 +30,21 @@ class CommentBox extends React.Component {
         }
     };
 
+    fetchComments = async () => {
+        //AXIOS METODA
+        const { data } = await axios.get('https://jsonplaceholder.typicode.com/comments');
+        data.map(comment => {this.props.saveComment(comment.body); return;});
+
+        //FETCH METODA
+        // await fetch('https://jsonplaceholder.typicode.com/comments')
+        //     .then(response => response.json())
+        //     .then(json => {
+        //         json.forEach(comment => {
+        //             this.props.saveComment(comment.body);
+        //         });
+        //     });
+    }
+
     render() {
         return (
             <div>
@@ -37,8 +54,20 @@ class CommentBox extends React.Component {
                         variant="contained"
                         color="primary"
                         endIcon={<SendIcon />}
-                        type="submite">
+                        type="submite"
+                        className="submiteButton">
                         Send Comment
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        endIcon={<FontDownloadIcon />}
+                        //Wolniejsze wyświetlenie danych za pomoca axios i fetch
+                        //onClick={this.fetchComments}>
+                        //MEGA SZYBKIE WYSWIETLENIE DANYCH!!!
+                        onClick={this.props.fetchComments}
+                        className="fetchButton">
+                        Fetch Comment
                     </Button>
                 </form>
             </div>
