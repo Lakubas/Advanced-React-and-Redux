@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent, ChangeEvent, } from 'react';
 //Redux
 import { connect } from 'react-redux';
 import * as actions from 'actions';
@@ -16,12 +16,12 @@ import axios from 'axios';
 class CommentBox extends React.Component {
     state = { comment: '' };
 
-    handleChangeComment = (event) => {
+    handleChangeComment = (event: ChangeEvent<HTMLTextAreaElement>) => {
         this.setState({ comment: event.target.value });
         // console.log("COMMENT change to: " + this.state.comment);
     }
 
-    handleSubmitComment = (event) => {
+    handleSubmitComment = (event: FormEvent) => {
         event.preventDefault();
         if (this.state.comment !== '') {
             this.props.saveComment(this.state.comment);
@@ -33,7 +33,9 @@ class CommentBox extends React.Component {
     fetchComments = async () => {
         //AXIOS METODA
         const { data } = await axios.get('https://jsonplaceholder.typicode.com/comments');
-        data.map(comment => {this.props.saveComment(comment.body); return;});
+        data.map((comment: { body: string; }) => {
+            return (this.props.saveComment(comment.body));
+        });
 
         //FETCH METODA
         // await fetch('https://jsonplaceholder.typicode.com/comments')
@@ -54,7 +56,7 @@ class CommentBox extends React.Component {
                         variant="contained"
                         color="primary"
                         endIcon={<SendIcon />}
-                        type="submite"
+                        type="submit"
                         className="submiteButton">
                         Send Comment
                     </Button>

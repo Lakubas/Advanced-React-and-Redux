@@ -3,7 +3,7 @@ import { SAVE_COMMENT } from 'actions/types';
 
 describe('saveComment', () => {
     it('Has the correct type', () => {
-        const action = saveComment();
+        const action = saveComment(undefined);
 
         expect(action.type).toEqual(SAVE_COMMENT);
     });
