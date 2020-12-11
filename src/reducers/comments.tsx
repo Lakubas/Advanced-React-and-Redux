@@ -6,7 +6,7 @@ export default function commentsReducer(state: string[] = [], action: {type: str
             return [...state, action.payload];
         case FETCH_COMMENTS:
             debugger;
-            const comments = action.payload.data.map((comment: { body: string; }) => comment.body);
+            const comments = action.payload.map((comment: { body: string; }) => comment.body);
             return [...state, ...comments];
         default:
             return state;

@@ -1,28 +1,32 @@
 import axios from 'axios';
 import { SAVE_COMMENT, FETCH_COMMENTS, CHANGE_AUTH } from 'actions/types';
 
-export interface interfaceAction {
-    type: string;
-    payload: any;
-}
+export type interfaceAction =
+    | { type: string, payload: string }
+    | { type: string, payload: string[] }
+    | { type: string, payload: boolean };
 
-export function saveComment(comment: interfaceAction["payload"]): {type: string, payload: string} {
+export function saveComment(comment: string): interfaceAction {
     return{
         type: SAVE_COMMENT,
         payload: comment
     };
 }
 
-export function fetchComments(): {type: string, payload: any} {
-    const response = axios.get('https://jsonplaceholder.typicode.com/comments');
+export async function fetchComments()
+    : Promise<{type: string, payload: string[]}> 
+{
+    const data = await axios
+        .get('https://jsonplaceholder.typicode.com/comments')
+        .then(result => {return result.data});
 
     return {
         type: FETCH_COMMENTS,
-        payload: response
-    }
+        payload: data
+    };
 }
 
-export function changeAuth(isLoggedIn: boolean): {type: string, payload: boolean} {
+export function changeAuth(isLoggedIn: boolean): interfaceAction {
     return {
         type: CHANGE_AUTH,
         payload: isLoggedIn

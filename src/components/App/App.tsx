@@ -15,6 +15,7 @@ import { Button } from '@material-ui/core';
 import CommentBox from 'components/Comment/CommentBox';
 import CommentList from 'components/Comment/CommentList';
 import Login from 'components/Login/Login';
+import { interfaceAction } from 'actions';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -56,9 +57,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 	},
 }));
 
-function App(props: { auth: boolean, changeAuth: (isLoggedIn: boolean) => { type: string, payload: boolean } }) {
+function App(props: { auth: any; changeAuth: (auth: boolean) => void; }) {
 	const classes = useStyles();
-	const [value, setValue] = React.useState(0);
+	const [value, setValue] = React.useState<number>(0);
 
 	const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
 		setValue(newValue);
@@ -70,13 +71,17 @@ function App(props: { auth: boolean, changeAuth: (isLoggedIn: boolean) => { type
 				<Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
 					<Tab label="List comments..." {...a11yProps(0)} />
 					{props.auth
-						? <Tab label="Create comments..." {...a11yProps(0)} />
+						? <Tab label="Create comments..." {...a11yProps(1)} />
 						: ""}
 					{/* <Button> <Login /> </Button> */}
 					<Button 
 						color="secondary"
 						className="MuiButtonBase-root MuiTab-root MuiTab-textColorInherit Mui-selected"
-						onClick={() => props.changeAuth(!props.auth)} >
+						onClick={(() => {
+                            {value===0 ? setValue(1) : setValue(0)};
+                            props.changeAuth(!props.auth); 
+                            }
+                        )}>
 						<Login />
 					</Button>
 				</Tabs>
@@ -93,7 +98,7 @@ function App(props: { auth: boolean, changeAuth: (isLoggedIn: boolean) => { type
 	);
 }
 
-function mapStateToProps(state: { auth: boolean }) {
+function mapStateToProps(state: any) {
 	return { auth: state.auth };
 }
 
