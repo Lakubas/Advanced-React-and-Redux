@@ -8,39 +8,49 @@ import { changeAuth } from 'actions';
 import Button from '@material-ui/core/Button';
 
 interface myProps {
-    auth: boolean,
-    changeAuth: typeof changeAuth;
+  auth: boolean,
+  changeAuth: typeof changeAuth;
 };
 
 class Login extends React.Component<myProps> {
-    renderButton() {
-        if (this.props.auth) {
-            return (
-                <button className="MuiButtonBase-root MuiTab-root MuiTab-textColorIngerit MuiTab-textColorInherit.Mui-selected MuiTabs-scroller MuiAppBar-colorPrime MuiPaper-root" style={{ display: "flex" }}>
-                    < MeetingRoomIcon /> <div style={{ marginLeft: "10px" }}>Sign In</div>
-                </button>
-            );
-            /* <Button color="secondary" startIcon={<MeetingRoomIcon />} style={{ width: "100%" }} onClick={() => this.props.changeAuth(false)}>
-            Sign Out
-            </Button> */
-        } else {
-            return (
-                <button className="MuiButtonBase-root MuiTab-root MuiTab-textColorIngerit MuiTab-textColorInherit.Mui-selected MuiTabs-scroller MuiAppBar-colorPrime MuiPaper-root" style={{ display: "flex" }}>
-                    < VpnKeyIcon /> <div style={{ marginLeft: "10px" }}>Sign In</div>
-                </button>
-            );
-        }
-    };
-
-    render() {
-        return (
-            this.renderButton()
-        );
+  renderButton() {
+    if (this.props.auth) {
+      return (
+        <React.Fragment>
+          < MeetingRoomIcon />
+          <div
+            style={{ marginLeft: "10px" }}>
+            Sign In
+          </div>
+        </React.Fragment>
+      );
+      /* <Button color="secondary" startIcon={<MeetingRoomIcon />} style={{ width: "100%" }} onClick={() => this.props.changeAuth(false)}>
+      Sign Out
+      </Button> */
+    } else {
+      return (
+        <React.Fragment>
+          < VpnKeyIcon />
+          <div style={{ marginLeft: "10px" }}>
+            Sign In
+          </div>
+        </React.Fragment>
+      );
     }
+  };
+
+  render() {
+    return (
+      // <div className="MuiButtonBase-root MuiTab-root MuiTab-textColorInherit Mui-selected">
+      //   {this.renderButton()}
+      // </div>
+      this.renderButton()
+    );
+  }
 }
 
 function mapStateToProps(state: { auth: boolean }) {
-    return { auth: state.auth }
+  return { auth: state.auth }
 }
 
 export default connect(mapStateToProps, actions)(Login);
