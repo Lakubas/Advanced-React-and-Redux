@@ -4,7 +4,7 @@ import { createStore, applyMiddleware } from 'redux';
 import reducers from 'reducers';
 import reduxPromise from 'redux-promise'
 
-export default function root({ children, initialState = {} }): any {
+export default function root({ children, initialState = {} }) {
     const store = createStore(
         reducers,
         initialState,

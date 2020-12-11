@@ -1,4 +1,4 @@
-import React, { FormEvent, ChangeEvent, } from 'react';
+import React, { FormEvent, ChangeEvent } from 'react';
 //Redux
 import { connect } from 'react-redux';
 import * as actions from 'actions';
@@ -12,9 +12,21 @@ import FontDownloadIcon from '@material-ui/icons/FontDownload';
 //CSS Files
 import 'components/Comment/css/CommentBox.css';
 import axios from 'axios';
+import { saveComment, fetchComments } from 'actions/index';
 
-class CommentBox extends React.Component {
+interface myProps {
+    saveComment: typeof saveComment,
+    fetchComments: typeof fetchComments,
+};
+
+interface myState {
+    comment: string,
+};
+
+class CommentBox extends React.Component<myProps, myState> {
     state = { comment: '' };
+    // props = { saveComment: {interfaceAction},
+    //             fetchComments: {}};
 
     handleChangeComment = (event: ChangeEvent<HTMLTextAreaElement>) => {
         this.setState({ comment: event.target.value });
@@ -76,5 +88,7 @@ class CommentBox extends React.Component {
         )
     }
 }
+
+
 
 export default connect(null, actions)(CommentBox);
